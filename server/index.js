@@ -68,6 +68,14 @@ io.on("connection", (socket) => {
     });
   });
 
+  //  // Emit a notification to the user when a new connection is made
+  //  socket.on("newConnection", (notificationData) => {
+  //   console.log('====================================');
+  //   console.log('notification');
+  //   console.log('====================================');
+  //   socket.broadcast.to(notificationData.recipientUserId).emit("notification", notificationData);
+  // });
+
   socket.off("setup", () => {
     console.log("USER DISCONNECTED");
     socket.leave(userData._id);

@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import {  useDispatch } from 'react-redux';
-import image from '../../../assets/log.jpg'
+import { useDispatch } from 'react-redux';
+import image from '../../../assets/log.jpg';
 import { logout } from '../../../redux/adminAuthSlice';
 const Navbar = () => {
-    
-    const [showLogoutDropdown, setShowLogoutDropdown] = useState(false); 
-    const handleProfileImageClick = () => {
-        setShowLogoutDropdown(!showLogoutDropdown);
-      };
-      const dispatch = useDispatch();
-      const handleLogout = () => {
-        dispatch(logout());
-      };
+  const [showLogoutDropdown, setShowLogoutDropdown] = useState(false);
+  const handleProfileImageClick = () => {
+    setShowLogoutDropdown(!showLogoutDropdown);
+  };
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <nav className=" bg-dark-purple p-4 flex justify-between items-center">
       {/* Logo */}
@@ -32,35 +31,38 @@ const Navbar = () => {
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
+            xmlns="http://www.w3.org/2000/svg">
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
               strokeWidth="2"
-              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-            ></path>
+              d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
           </svg>
         </button>
       </div>
 
       {/* User View */}
-      <div className='flex items-center'>
-          <div className='w-10 h-10 bg-gray-300 rounded-full overflow-hidden' onClick={handleProfileImageClick}>
-            <img src={image} alt='User' className='w-full h-full object-cover cursor-pointer' />
-          </div>
-          {showLogoutDropdown && (
-            <div className='ml-2'>
-              {/* Dropdown content */}
-              <button
-                className='text-gray-300 text-sm hover:text-white focus:outline-none'
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-            </div>
-          )}
+      <div className="flex items-center">
+        <div
+          className="w-10 h-10 bg-gray-300 rounded-full overflow-hidden"
+          onClick={handleProfileImageClick}>
+          <img
+            src={image}
+            alt="User"
+            className="w-full h-full object-cover cursor-pointer"
+          />
         </div>
+        {showLogoutDropdown && (
+          <div className="ml-2">
+            {/* Dropdown content */}
+            <button
+              className="text-gray-300 text-sm hover:text-white focus:outline-none"
+              onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };

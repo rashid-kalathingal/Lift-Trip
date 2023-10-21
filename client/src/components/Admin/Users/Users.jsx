@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { request } from '../../../utils/fetchApi';
 import { useSelector } from 'react-redux';
-import { FiUser,FiX } from 'react-icons/fi';
-import Swal from 'sweetalert2'
+import { FiUser, FiX } from 'react-icons/fi';
+import Swal from 'sweetalert2';
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null); // To track the selected user
@@ -13,7 +13,7 @@ const Users = () => {
     const fetchUsers = async () => {
       try {
         const options = {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         };
         const data = await request('/adminAuth/getAllUser', 'GET', options);
         setUsers(data);
@@ -25,7 +25,6 @@ const Users = () => {
   }, [token]);
 
   const handleBlockToggle = async (id) => {
-
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -33,39 +32,38 @@ const Users = () => {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, Change Status it!'
-    }).then(async(result) => {
+      confirmButtonText: 'Yes, Change Status it!',
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        Swal.fire(
-          'Changed!',
-          'User Status Changed.',
-          'success'
-        )
-         // Handle blocking/unblocking logic
-    try {
-      const options = {
-        'Authorization': `Bearer ${token}`,
-      };
-      const updatedStatus = await request(`/adminAuth/handleBlock/${id}`, 'PUT', options);
-     
-      setUsers((prevUsers) => {
-        const updatedUsers = prevUsers.map((user) => {
-          if (user._id === id) {
-            return {
-              ...user,
-              isBlocked: updatedStatus,
-            };
-          }
-          return user;
-        });
-        return updatedUsers;
-      });
-    } catch (error) {
-      console.error(error);
-    }
+        Swal.fire('Changed!', 'User Status Changed.', 'success');
+        // Handle blocking/unblocking logic
+        try {
+          const options = {
+            Authorization: `Bearer ${token}`,
+          };
+          const updatedStatus = await request(
+            `/adminAuth/handleBlock/${id}`,
+            'PUT',
+            options
+          );
+
+          setUsers((prevUsers) => {
+            const updatedUsers = prevUsers.map((user) => {
+              if (user._id === id) {
+                return {
+                  ...user,
+                  isBlocked: updatedStatus,
+                };
+              }
+              return user;
+            });
+            return updatedUsers;
+          });
+        } catch (error) {
+          console.error(error);
+        }
       }
-    })
-   
+    });
   };
 
   const openUserProfileModal = (user) => {
@@ -81,7 +79,7 @@ const Users = () => {
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>
             <th scope="col" className="px-6 py-3">
               Name
@@ -101,40 +99,42 @@ const Users = () => {
           </tr>
         </thead>
         <tbody>
-  {Array.isArray(users) && users.length > 0 ? (
-    users.map((user, index) => (
-      <tr key={index} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-        <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-          {user.username}
-        </td>
-        <td className="px-6 py-4">{user.email}</td>
-        <td className="px-6 py-4">
-          <button onClick={() => openUserProfileModal(user)}>
-            <FiUser size={26} color="blue" />
-          </button>
-        </td>
-        <td className="px-6 py-4">
-          {user.isBlocked ? 'Blocked' : 'Active'}
-        </td>
-        <td className="px-6 py-4">
-          <button
-            className={`font-medium text-blue-600 dark:text-blue-500 hover:underline ${
-              user.isBlocked ? 'text-red-600 dark:text-red-500' : 'text-green-600 dark:text-green-500'
-            }`}
-            onClick={() => handleBlockToggle(user._id)}
-          >
-            {user.isBlocked ? 'Unblock' : 'Block'}
-          </button>
-        </td>
-      </tr>
-    ))
-  ) : (
-    <tr>
-      <td colSpan="5">No users found.</td>
-    </tr>
-  )}
-</tbody>
-
+          {Array.isArray(users) && users.length > 0 ? (
+            users.map((user, index) => (
+              <tr
+                key={index}
+                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {user.username}
+                </td>
+                <td className="px-6 py-4">{user.email}</td>
+                <td className="px-6 py-4">
+                  <button onClick={() => openUserProfileModal(user)}>
+                    <FiUser size={26} color="blue" />
+                  </button>
+                </td>
+                <td className="px-6 py-4">
+                  {user.isBlocked ? 'Blocked' : 'Active'}
+                </td>
+                <td className="px-6 py-4">
+                  <button
+                    className={`font-medium text-blue-600 dark:text-blue-500 hover:underline ${
+                      user.isBlocked
+                        ? 'text-red-600 dark:text-red-500'
+                        : 'text-green-600 dark:text-green-500'
+                    }`}
+                    onClick={() => handleBlockToggle(user._id)}>
+                    {user.isBlocked ? 'Unblock' : 'Block'}
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5">No users found.</td>
+            </tr>
+          )}
+        </tbody>
       </table>
 
       {/* User Profile Modal */}
@@ -145,8 +145,7 @@ const Users = () => {
             <div className="flex justify-end">
               <button
                 className="text-gray-500 hover:text-gray-700"
-                onClick={closeUserProfileModal}
-              >
+                onClick={closeUserProfileModal}>
                 <FiX size={20} />
               </button>
             </div>

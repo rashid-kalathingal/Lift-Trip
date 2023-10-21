@@ -161,17 +161,24 @@ try {
   console.log(error);
 }
 }
-const rejectionconnection =async(req,res)=>{
-try {
-  const connection =await Connection.findById(req.params.id)
-  console.log(connection);
-    // Delete the selected connection
-    await connection.remove();
+const rejectionconnection = async (req, res) => {
+  try {
+    const connection = await Connection.findById(req.params.id);
+    console.log(connection);
+
+    if (!connection) {
+      return res.status(404).json({ error: 'Connection not found' });
+    }
+
+    // Use deleteOne method to delete the selected connection
+    await Connection.deleteOne({ _id: req.params.id });
 
     res.status(204).send();
-   
-} catch (error) {
-  console.log(error);
-}
-}
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+};
+
+
 module.exports = { vehicle ,getVehicles,ride,getconnections,acceptconnection,rejectionconnection};

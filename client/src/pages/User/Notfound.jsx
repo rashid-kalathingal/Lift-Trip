@@ -7,7 +7,6 @@ const NotFound = () => {
       <p className="text-lg text-gray-600 mt-2">
         The page you are looking for doesn't exist.
       </p>
-    
     </div>
   );
 };

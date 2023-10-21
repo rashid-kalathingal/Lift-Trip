@@ -17,7 +17,7 @@ const register =async (req,res)=>{
             const hashPassword = await bcrypt.hash(req.body.password, 10)
             const newAdmin = await Admin.create({...req.body, password:hashPassword})
             const {password, ...others} = newAdmin._doc
-            const token = jwt.sign({id: newAdmin._id},process.env.JWT_ADMINSECRET,{expiresIn: '5h'})
+            const token = jwt.sign({id: newAdmin._id},process.env.JWT_SECRET,{expiresIn: '5h'})
             return res.status(201).json({admin:others, token})
         } catch (error) {
             return res.status(500).json(error)
@@ -36,7 +36,7 @@ const login =async(req,res)=>{
             }
     
             const {password, ...others} = admin._doc
-            const token = jwt.sign({id:admin.id},process.env.JWT_ADMINSECRET,{expiresIn:'5h'})
+            const token = jwt.sign({id:admin.id},process.env.JWT_SECRET,{expiresIn:'5h'})
             return res.status(200).json({admin:others, token})
         } catch (error) {
             return res.status(500).json(error)

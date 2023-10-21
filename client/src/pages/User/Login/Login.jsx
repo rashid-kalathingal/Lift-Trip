@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { request } from '../../../utils/fetchApi';
 import { useDispatch, useSelector } from 'react-redux';
-import { login   } from '../../../redux/authSlice';
+import { login } from '../../../redux/authSlice';
 import LoginImage from '../../../assets/log.jpg';
 import icon from '../../../assets/liftTrip.png';
 import Google from '../../../components/User/Google/Google';
@@ -12,8 +12,8 @@ const Login = () => {
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user  } = useSelector((state) => state.auth)
-  
+  const { user } = useSelector((state) => state.auth);
+
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -37,22 +37,23 @@ const Login = () => {
         'Content-Type': 'application/json',
       };
 
-      const data = await request('/auth/login', 'POST', options, { email, password });
-      console.log(data,"////////////");
-      console.log(data.message,"/");
-      if(data.message){
+      const data = await request('/auth/login', 'POST', options, {
+        email,
+        password,
+      });
+      console.log(data, '////////////');
+      console.log(data.message, '/');
+      if (data.message) {
         setError(data.message);
         return;
       }
-      
+
       if (!data.token) {
         setError(data.error);
       } else {
-        
         dispatch(login(data));
         navigate('/');
       }
-      
     } catch (error) {
       setError('An error occurred while logging in.');
       console.error(error);
@@ -64,16 +65,16 @@ const Login = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
-  if(user){
-return <Navigate to='/'/>
+  if (user) {
+    return <Navigate to="/" />;
   }
-
-
 
   return (
     <div className="flex h-screen">
       {/* Left half: Image */}
-      <div className="w-1/2 bg-cover bg-blend-darken" style={{ backgroundImage: `url(${LoginImage})` }}></div>
+      <div
+        className="w-1/2 bg-cover bg-blend-darken"
+        style={{ backgroundImage: `url(${LoginImage})` }}></div>
 
       {/* Right half: Login Form */}
       <div className="w-1/2 bg-blue-950 flex justify-center items-center">
@@ -98,20 +99,20 @@ return <Navigate to='/'/>
               />
               <button
                 type="submit"
-                className="bg-blue-500 text-white py-2 rounded-md text-center hover:bg-blue-600 transition-colors duration-300"
-              >
+                className="bg-blue-500 text-white py-2 rounded-md text-center hover:bg-blue-600 transition-colors duration-300">
                 Login
               </button>
               <p className="text-red-500 text-center">{error}</p>
               <p className="text-gray-600 text-center">
-                Don't have an account? <Link to="/register" className="text-blue-500 hover:underline">Register</Link>
+                Don't have an account?{' '}
+                <Link to="/register" className="text-blue-500 hover:underline">
+                  Register
+                </Link>
               </p>
-              <Google/>
+              <Google />
             </form>
           </div>
         </div>
-       
-
       </div>
     </div>
   );

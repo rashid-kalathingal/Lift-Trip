@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import {  useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { request } from '../../../utils/fetchApi';
 import { useDispatch } from 'react-redux';
 import { login } from '../../../redux/adminAuthSlice';
 import icon from '../../../assets/liftTrip.png';
-import image from '../../../assets/gettyimages-4.jpg'
+import image from '../../../assets/gettyimages-4.jpg';
 
 const AdminLogin = () => {
   const [email, setEmail] = useState('');
@@ -22,7 +22,10 @@ const AdminLogin = () => {
         'Content-Type': 'application/json',
       };
 
-      const data = await request('/adminAuth/login', 'POST', options, { email, password });
+      const data = await request('/adminAuth/login', 'POST', options, {
+        email,
+        password,
+      });
       console.log(data);
 
       dispatch(login(data));
@@ -34,7 +37,9 @@ const AdminLogin = () => {
 
   return (
     <div className="flex h-screen">
-      <div className="w-1/2 bg-cover" style={{ backgroundImage: `url(${image})` }}>
+      <div
+        className="w-1/2 bg-cover"
+        style={{ backgroundImage: `url(${image})` }}>
         {/* Background Image */}
       </div>
       <div className="w-1/2 flex justify-center items-center bg-amber-950">
@@ -42,9 +47,13 @@ const AdminLogin = () => {
           <div className="text-center mb-4">
             <img src={icon} alt="Icon" className="w-1/3 mx-auto" />
           </div>
-          <form onSubmit={handleLogin} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+          <form
+            onSubmit={handleLogin}
+            className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <div className="mb-4">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email">
                 Email
               </label>
               <input
@@ -55,7 +64,9 @@ const AdminLogin = () => {
               />
             </div>
             <div className="mb-6">
-              <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="password">
                 Password
               </label>
               <input
@@ -68,8 +79,7 @@ const AdminLogin = () => {
             <div className="flex items-center justify-between">
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Login
               </button>
             </div>

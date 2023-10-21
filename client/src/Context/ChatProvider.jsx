@@ -1,27 +1,27 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from 'react';
 
-const ChatContext = createContext()
+const ChatContext = createContext();
 
-const ChatProvider = ({children}) =>{
-    const [user, setUser] = useState()
-    const [selectedChat, setSelectedChat] = useState();
-    const [notification, setNotification] = useState([]);
-    const [chats, setChats] = useState();
-    useEffect(() => {
-        // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        // setUser(userInfo);
-        
-        const userInfo = localStorage.getItem("userInfo");
-        // JSON.parse(userInfo)
-         setUser(userInfo)
-        // if (!userInfo) {
-        //   navigate("/");
-        // }
-      }, []);
+const ChatProvider = ({ children }) => {
+  const [user, setUser] = useState();
+  const [selectedChat, setSelectedChat] = useState();
+  const [notification, setNotification] = useState([]);
+  const [chats, setChats] = useState();
+  useEffect(() => {
+    // const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    // setUser(userInfo);
 
-    return ( 
+    const userInfo = localStorage.getItem('userInfo');
+    // JSON.parse(userInfo)
+    setUser(userInfo);
+    // if (!userInfo) {
+    //   navigate("/");
+    // }
+  }, []);
+
+  return (
     <ChatContext.Provider
-    value={{
+      value={{
         selectedChat,
         setSelectedChat,
         user,
@@ -30,17 +30,14 @@ const ChatProvider = ({children}) =>{
         setNotification,
         chats,
         setChats,
-      }}
-       >
-        {children}
-        </ChatContext.Provider >
-    );
+      }}>
+      {children}
+    </ChatContext.Provider>
+  );
 };
 
+export const ChatState = () => {
+  return useContext(ChatContext);
+};
 
-export const ChatState = ()=>{
-     return useContext(ChatContext);
-    
-}
-
-export default ChatProvider;
+export default ChatProvider;

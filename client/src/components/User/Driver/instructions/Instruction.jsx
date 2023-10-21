@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-
-const Instruction = ({onInstructionDataChange}) => {
+import { toast } from 'react-toastify';
+const Instruction = ({ onInstructionDataChange }) => {
   const [instructions, setInstructions] = useState([]);
   const [textinstruction, setTextInstruction] = useState('');
   const [selectedRadio, setSelectedRadio] = useState('');
@@ -13,8 +13,15 @@ const Instruction = ({onInstructionDataChange}) => {
       setInstructions(instructions.filter((item) => item !== label));
     }
   };
-  
-console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textinstruction);
+
+  console.log(
+    instructions,
+    '?????????',
+    selectedRadio,
+    '//////',
+    paymentAmount,
+    textinstruction
+  );
   const handleRadioChange = (event) => {
     setSelectedRadio(event.target.value);
   };
@@ -37,9 +44,9 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
   };
 
   return (
-    <div className="flex bg-slate-100">
+    <div className="flex flex-wrap bg-slate-100">
       {/* Left Side: Instructions */}
-      <div className="flex-1 p-6">
+      <div className=" w-full md:flex-1 p-6">
         <h3 className="text-2xl font-semibold mb-4">Instructions</h3>
         <div className="space-y-4">
           <div className="mb-4">
@@ -52,8 +59,7 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
             />
             <label
               htmlFor="readyToDrive"
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Ready To Allow Drive
             </label>
           </div>
@@ -67,8 +73,7 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
             />
             <label
               htmlFor="noMeetups"
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               No Other Meetups
             </label>
           </div>
@@ -82,13 +87,14 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
             />
             <label
               htmlFor="noDrugs"
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               No drugs
             </label>
           </div>
           <div>
-            <label htmlFor="message" className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+            <label
+              htmlFor="message"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-black">
               Add more Instructions
             </label>
             <textarea
@@ -96,13 +102,12 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
               rows="4"
               className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="Write your thoughts here..."
-              onChange={(e) => setTextInstruction(e.target.value)}
-            ></textarea>
+              onChange={(e) => setTextInstruction(e.target.value)}></textarea>
           </div>
         </div>
       </div>
 
-      {/* Right Side: Payment */}             
+      {/* Right Side: Payment */}
       <div className="flex-1 p-6">
         <h3 className="text-2xl font-semibold mb-4">Payment ways</h3>
         <div className="space-y-4">
@@ -118,8 +123,7 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
             />
             <label
               htmlFor="freeDrive"
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Free Drive
             </label>
           </div>
@@ -135,8 +139,7 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
             />
             <label
               htmlFor="shareExpenses"
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Share Expenses
             </label>
           </div>
@@ -152,14 +155,15 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
             />
             <label
               htmlFor="needPayment"
-              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-            >
+              className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               Need Payment
             </label>
           </div>
           {selectedRadio === 'Need Payment' && (
             <div className="mb-4">
-              <label htmlFor="amount" className="block text-sm font-medium text-gray-900 dark:text-gray-300">
+              <label
+                htmlFor="amount"
+                className="block text-sm font-medium text-gray-900 dark:text-gray-300">
                 Amount
               </label>
               <input
@@ -173,17 +177,14 @@ console.log(instructions,"?????????",selectedRadio,'//////',paymentAmount,textin
             </div>
           )}
         </div>
-      
       </div>
       <button
-  className='relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-mono font-medium tracking-tighter text-white bg-stone-900 rounded-lg group'
-  onClick={handleDataSubmit}
->
-  <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-slate-500 rounded-full group-hover:w-56 group-hover:h-56"></span>
-  <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
-  <span className="relative">Submit Data</span>
-</button>
-
+        className="relative inline-flex items-center justify-center px-10 py-4 overflow-hidden font-mono font-medium tracking-tighter text-white bg-stone-900 rounded-lg group"
+        onClick={handleDataSubmit}>
+        <span className="absolute w-0 h-0 transition-all duration-500 ease-out bg-slate-500 rounded-full group-hover:w-56 group-hover:h-56"></span>
+        <span className="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-b from-transparent via-transparent to-gray-700"></span>
+        <span className="relative">Submit Data</span>
+      </button>
     </div>
   );
 };

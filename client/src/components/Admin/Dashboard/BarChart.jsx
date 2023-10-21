@@ -10,16 +10,14 @@ CategoryScale.id = 'category';
 Chart.register(LinearScale, CategoryScale);
 
 const BarChart = () => {
-   const [rides,setrides]=useState([])
-
-
+  const [rides, setrides] = useState([]);
 
   useEffect(() => {
     const fetchWallet = async () => {
       try {
         const response = await adminInstance.get('/getTotRides');
         console.log(response.data, 'pppppp');
-        setrides(response.data)
+        setrides(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -29,18 +27,26 @@ const BarChart = () => {
   }, []);
 
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
   ];
-  
- 
-  
+
   // Create an array to hold the data points for each month
   const dataPoints = months.map((month, index) => {
-    const monthData = rides.find(ride => ride._id - 1 === index); // Subtract 1 here
+    const monthData = rides.find((ride) => ride._id - 1 === index); // Subtract 1 here
     return monthData ? monthData.count : 0;
   });
-  
+
   const data = {
     labels: months,
     datasets: [
@@ -49,20 +55,18 @@ const BarChart = () => {
         data: dataPoints,
         backgroundColor: 'rgba(255, 99, 132, 0.2)',
         borderColor: 'rgb(255, 99, 132)',
-        borderWidth: 1
-      }
-    ]
+        borderWidth: 1,
+      },
+    ],
   };
-  
+
   const options = {
     scales: {
       y: {
-        beginAtZero: true
-      }
-    }
+        beginAtZero: true,
+      },
+    },
   };
-  
-  
 
   return (
     <div>

@@ -9,14 +9,13 @@ import icon from '../../../assets/liftTrip.png';
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [mobile, setMobile] =useState('')
+  const [mobile, setMobile] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user  } = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
 
-  
   const handleRegister = async (e) => {
     e.preventDefault();
 
@@ -42,26 +41,31 @@ const Register = () => {
     try {
       const options = {
         'Content-Type': 'application/json',
-        
       };
 
-   
-
-    // If email is not registered, proceed with registration
-    const registrationData = await request('/auth/register', 'POST', options, { username, email,mobile, password });
-    console.log(registrationData, "////////////..............////////");
-    if (registrationData.error) {
-      setError(registrationData.error); // Set the error message from the response
-    } else {
-      dispatch(register(registrationData));
-      navigate('/');
-    }
+      // If email is not registered, proceed with registration
+      const registrationData = await request(
+        '/auth/register',
+        'POST',
+        options,
+        { username, email, mobile, password }
+      );
+      console.log(registrationData, '////////////..............////////');
+      if (registrationData.error) {
+        setError(registrationData.error); // Set the error message from the response
+      } else {
+        dispatch(register(registrationData));
+        navigate('/');
+      }
     } catch (error) {
-      if (error.response && (error.response.status === 400 || error.response.status === 500)) {
+      if (
+        error.response &&
+        (error.response.status === 400 || error.response.status === 500)
+      ) {
         setError(error.response.data.error);
-    } else {
+      } else {
         setError('An error occurred during registration.');
-    }
+      }
       console.error(error);
     }
   };
@@ -77,14 +81,16 @@ const Register = () => {
     const mobileRegex = /^[6789]\d{9}$/;
     return mobileRegex.test(mobile);
   };
-  if(user){
-    return <Navigate to='/'/>
-      }
+  if (user) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className="flex h-screen">
       {/* Left half: Image */}
-      <div className="w-1/2 bg-cover bg-blend-darken" style={{ backgroundImage: `url(${LoginImage})` }}></div>
+      <div
+        className="w-1/2 bg-cover bg-blend-darken"
+        style={{ backgroundImage: `url(${LoginImage})` }}></div>
 
       {/* Right half: Register Form */}
       <div className="w-1/2 bg-blue-950 flex justify-center items-center">
@@ -93,7 +99,9 @@ const Register = () => {
             <img src={icon} alt="Icon" className="w-1/3 mx-auto" />
           </div>
           <div className="bg-white p-8 rounded-lg">
-            <h2 className="text-3xl text-center text-indigo-900 mb-8">Register</h2>
+            <h2 className="text-3xl text-center text-indigo-900 mb-8">
+              Register
+            </h2>
             <form onSubmit={handleRegister} className="flex flex-col gap-4">
               <input
                 type="text"
@@ -121,13 +129,15 @@ const Register = () => {
               />
               <button
                 type="submit"
-                className="bg-blue-500 text-white py-2 rounded-md text-center hover:bg-blue-600 transition-colors duration-300"
-              >
+                className="bg-blue-500 text-white py-2 rounded-md text-center hover:bg-blue-600 transition-colors duration-300">
                 Register
               </button>
               <p className="text-red-500 text-center">{error}</p>
               <p className="text-gray-600 text-center">
-                Already have an account? <Link to="/login" className="text-blue-500 hover:underline">Login</Link>
+                Already have an account?{' '}
+                <Link to="/login" className="text-blue-500 hover:underline">
+                  Login
+                </Link>
               </p>
             </form>
           </div>

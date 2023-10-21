@@ -7,7 +7,9 @@ const SuccessPayment = () => {
       <div className="text-5xl text-green-500">
         <FaCheckCircle />
       </div>
-      <h1 className="text-3xl font-semibold text-gray-800 mt-4">Payment Successful!</h1>
+      <h1 className="text-3xl font-semibold text-gray-800 mt-4">
+        Payment Successful!
+      </h1>
       <p className="text-lg text-gray-600 mt-2">
         Thank you for your payment. Your ride is confirmed.
       </p>
