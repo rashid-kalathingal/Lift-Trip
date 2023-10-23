@@ -22,8 +22,8 @@ app.use(express.urlencoded({ extended: true }));
 
 
 // Use user and admin routes
-app.use('/auth', userRoutes); 
-app.use('/adminAuth', adminRoutes);
+app.use('/api/auth', userRoutes); 
+app.use('/api/adminAuth', adminRoutes);
 // app.use('/auth/stripe', stripe);
 
 // Start the server
@@ -36,7 +36,7 @@ const server =app.listen(PORT, () => {
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: "http://lifttrip.ziasrote.live/",
     // credentials: true,
   },
 });
