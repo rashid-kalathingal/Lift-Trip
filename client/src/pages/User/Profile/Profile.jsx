@@ -409,7 +409,7 @@ const Profile = () => {
                 src={
                   display.startsWith('http')
                     ? display
-                    : `http://localhost:5000/images/${display}`
+                    : `https://lifttripziasrote.live/images/${display}`
                 }
                 alt="Profile"
                 className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"
