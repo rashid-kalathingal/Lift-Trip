@@ -10,8 +10,7 @@ import { ToastContainer } from 'react-toastify';
 import ChatProvider from './Context/ChatProvider';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-const client_id =
-  '2919663798-lkeijcb3g0f8mdb6utrmmj3rhanb87b5.apps.googleusercontent.com';
+const client_id ='2919663798-lkeijcb3g0f8mdb6utrmmj3rhanb87b5.apps.googleusercontent.com';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <GoogleOAuthProvider clientId={client_id}>
