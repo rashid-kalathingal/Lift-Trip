@@ -6,6 +6,7 @@ const cors = require('cors')
 const userRoutes = require('./routes/User');
 const adminRoutes = require('./routes/Admin');
 // const stripe =require('./routes/Stripe')
+const path = require("path")
 const app = express()
 const {Server} =require('socket.io')
 
@@ -14,12 +15,19 @@ connectDB();
 
 // Use CORS and body parsers
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit:'50mb'}));
 app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({limit:'50mb', extended: true }));
 
-
-
+app.use("*", (req, res) => {
+  console.log(req.originalUrl, "image url")
+  console.log(__dirname+ "/public/images")
+  const urlData = req.originalUrl.split("/")
+  console.log(urlData, "url dat array")
+  const imageName =urlData[urlData.length-1];
+  console.log(imageName, "this is image name")
+  res.sendFile(path.join(__dirname, "public", `/images/${imageName}`))
+})
 
 // Use user and admin routes
 app.use('/api/auth', userRoutes); 

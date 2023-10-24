@@ -3,9 +3,9 @@ const Connection = require('../../models/Connection')
 const Chat = require('../../models/Chat')
 const getrides  = async (req, res) => {
     try {
-        //console.log('hellooo rides')
+        // console.log('hellooo rides')
         const rides = await Driver.find({Verified: true}).populate("user");
-        //console.log(rides);
+        // console.log(rides);
         return res.status(200).json(rides)
     } catch (error) {
         console.log(error);
@@ -13,13 +13,13 @@ const getrides  = async (req, res) => {
 }
 
 const getsinglerides =async (req,res)=>{
-    //console.log("dcvbhdv");
+    // console.log("dcvbhdv");
 try {
     const Id = req.params.id;
     const cleanedId = Id.replace(/^:/, "").replace(/"$/, "");
     const rides = await Driver.find({_id: cleanedId}).populate("user");
     const ride = rides[0]
-    //console.log(ride,"//////////");
+    // console.log(ride,"//////////");
     return res.status(200).json(ride)
 } catch (error) {
     console.log(error);

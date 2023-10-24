@@ -32,7 +32,9 @@ router.get('/getrides',riderController.getrides)
 router.get('/getVehicles/:id', driverController.getVehicles);
 router.get('/getsinglerides/:id', riderController.getsinglerides);
 router.post('/makeConnection',riderController.makeConnection)
+
 router.post('/vehicle', upload.fields([ { name: 'selectedImage', maxCount: 1}, { name: 'selectedRC', maxCount: 1 }, { name: 'selectedInsurance', maxCount: 1 },]), driverController.vehicle);
+
 router.get('/checkUser/:id', userAuthController.checkUser);
 router.put('/profile/:id', upload.single('displayPic'), userController.profile);
 router.put('/changeName/:id', userController.changeName);
