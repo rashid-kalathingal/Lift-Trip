@@ -199,13 +199,13 @@ const Verification = () => {
           </button>
           {showSecondImage ? (
             <img
-              src={`http://localhost:5000/images/${selectedUser.VehicleRC[0]}`}
+              src={selectedUser.VehicleRC[0]}
               alt="Vehicle RC"
               className="w-128 h-128 mt-2 rounded-lg object-cover"
             />
           ) : (
             <img
-              src={`http://localhost:5000/images/${selectedUser.VehicleInsurance[0]}`}
+              src={selectedUser.VehicleInsurance[0]}
               alt="Vehicle Insurance"
               className="w-128 h-128 mt-2 rounded-lg object-cover"
             />

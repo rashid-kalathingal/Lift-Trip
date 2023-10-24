@@ -128,7 +128,7 @@ const DropdownNotification = ({ data, onClick }) => {
                     <div className="flex-shrink-0">
                       <img
                         className="w-8 h-8 rounded-full"
-                        src={`http://localhost:5000/images/${item.riderId.displayPic[0]}`}
+                        src={item.riderId.displayPic[0]}
                         alt={`${item.riderId.username}'s Profile Pic`}
                       />
                     </div>

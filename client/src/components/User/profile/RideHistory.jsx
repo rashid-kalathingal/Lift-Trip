@@ -50,7 +50,7 @@ const RideHistory = () => {
             <div className="max-h-140 overflow-hidden">
               <img
                 className="w-full h-auto"
-                src={`http://localhost:5000/images/${ride.rideInfo.VehicleImage[0]}`}
+                src={ride.rideInfo.VehicleImage[0]}
                 alt=""
               />
             </div>

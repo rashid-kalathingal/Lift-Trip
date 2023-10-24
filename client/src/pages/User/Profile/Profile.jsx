@@ -347,7 +347,7 @@ const Profile = () => {
                   backgroundImage: `url(${
                     display?.startsWith('http')
                       ? display
-                      : `http://localhost:5000/images/${display}`
+                      : {display}
                   })`,
                 }}></div>
               <h1 className="text-3xl font-bold pt-8 lg:pt-0">{name}</h1>
@@ -409,7 +409,7 @@ const Profile = () => {
                 src={
                   display.startsWith('http')
                     ? display
-                    : `https://lifttripziasrote.live/images/${display}`
+                    : {display}
                 }
                 alt="Profile"
                 className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"

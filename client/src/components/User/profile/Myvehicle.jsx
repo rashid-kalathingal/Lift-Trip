@@ -57,7 +57,7 @@ const Myvehicle = () => {
             <div className="max-h-140 overflow-hidden">
               <img
                 className="w-full h-auto"
-                src={`http://localhost:5000/images/${vehicleData.VehicleImage[0]}`}
+                src={vehicleData.VehicleImage[0]}
                 alt=""
               />
             </div>

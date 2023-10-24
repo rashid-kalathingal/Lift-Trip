@@ -212,7 +212,7 @@ const Rider = () => {
                 <div className="max-h-125 overflow-hidden">
                   <img
                     className="transform duration-300 group-hover:scale-110"
-                    src={`http://localhost:5000/images/${ride.VehicleImage[0]}`}
+                    src={ride.VehicleImage[0]}
                     alt=""
                   />
                 </div>

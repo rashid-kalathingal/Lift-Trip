@@ -106,7 +106,7 @@ const DetailView = () => {
               {ride.VehicleImage && ride.VehicleImage[0] ? (
                 <img
                   className="rounded-t-lg  px-2 aspect-video w-full"
-                  src={`http://localhost:5000/images/${ride.VehicleImage[0]}`}
+                  src={ride.VehicleImage[0]}
                   alt=""
                 />
               ) : (
@@ -132,7 +132,7 @@ const DetailView = () => {
               {ride.VehicleImage && ride.VehicleImage[0] ? (
                 <img
                   className="rounded-t-lg  px-2 aspect-video w-full"
-                  src={`http://localhost:5000/images/${ride.user.displayPic[0]}`}
+                  src={ride.user.displayPic[0]}
                   alt=""
                 />
               ) : (
@@ -164,13 +164,13 @@ const DetailView = () => {
               <div className="relative mx-0 mt-4 flex items-center gap-4 overflow-hidden rounded-xl bg-transparent bg-clip-border pt-0 pb-8 text-gray-700 shadow-none">
                 {data.Driver ? (
                   <img
-                    src={`http://localhost:5000/images/${data.Driver.displayPic[0]}`}
+                    src={data.Driver.displayPic[0]}
                     alt=""
                     className="relative inline-block h-[58px] w-[58px] !rounded-full object-cover object-center"
                   />
                 ) : (
                   <img
-                    src={`http://localhost:5000/images/${data.Rider.displayPic[0]}`}
+                    src={data.Rider.displayPic[0]}
                     alt=""
                     className="relative inline-block h-[58px] w-[58px] !rounded-full object-cover object-center"
                   />

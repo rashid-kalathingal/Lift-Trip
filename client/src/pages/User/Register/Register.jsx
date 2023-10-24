@@ -86,10 +86,10 @@ const Register = () => {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-wrap h-screen">
       {/* Left half: Image */}
       <div
-        className="w-1/2 bg-cover bg-blend-darken"
+        className="w-1/2 flex bg-cover bg-blend-darken"
         style={{ backgroundImage: `url(${LoginImage})` }}></div>
 
       {/* Right half: Register Form */}

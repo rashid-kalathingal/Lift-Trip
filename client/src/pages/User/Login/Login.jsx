@@ -70,10 +70,10 @@ const Login = () => {
   }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex flex-wrap h-screen">
       {/* Left half: Image */}
       <div
-        className="w-1/2 bg-cover bg-blend-darken"
+        className="w-1/2 bg-cover flex bg-blend-darken"
         style={{ backgroundImage: `url(${LoginImage})` }}></div>
 
       {/* Right half: Login Form */}

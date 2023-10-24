@@ -153,7 +153,7 @@ const Navbar = () => {
                     src={
                       display.startsWith('http')
                         ? display
-                        : `http://localhost:5000/images/${display}`
+                        : {display}
                     }
                     alt="user"
                   />

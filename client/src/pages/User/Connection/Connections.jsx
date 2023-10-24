@@ -304,7 +304,7 @@ const Connections = () => {
                     <div className="flex-shrink-0">
                       <img
                         className="w-8 h-8 rounded-full"
-                        src={`http://localhost:5000/images/${item.userDetails.displayPic[0]}`}
+                        src={item.userDetails.displayPic[0]}
                         alt={`${item.username}'s Profile Pic`}
                       />
                     </div>

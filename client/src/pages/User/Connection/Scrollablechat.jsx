@@ -21,7 +21,7 @@ const Scrollablechat = ({ messages }) => {
                 isLastMessage(messages, i, user._id)) && (
                 <div className="mt-7px mr-1">
                   <img
-                    src={`http://localhost:5000/images/${m.sender.displayPic[0]}`}
+                    src={m.sender.displayPic[0]}
                     alt={m.sender.username}
                     className="w-8 h-8 rounded-full cursor-pointer"
                   />
