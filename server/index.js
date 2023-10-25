@@ -19,20 +19,12 @@ app.use(express.json({limit:'50mb'}));
 app.use(express.static('public'))
 app.use(express.urlencoded({limit:'50mb', extended: true }));
 
-app.use("*", (req, res) => {
-  console.log(req.originalUrl, "image url")
-  console.log(__dirname+ "/public/images")
-  const urlData = req.originalUrl.split("/")
-  console.log(urlData, "url dat array")
-  const imageName =urlData[urlData.length-1];
-  console.log(imageName, "this is image name")
-  res.sendFile(path.join(__dirname, "public", `/images/${imageName}`))
-})
+
 
 // Use user and admin routes
 app.use('/api/auth', userRoutes); 
 app.use('/api/adminAuth', adminRoutes);
-// app.use('/auth/stripe', stripe);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;

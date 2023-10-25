@@ -3,9 +3,16 @@ const Reviews = require('../../models/Review');
 const Connection = require('../../models/Connection');
 const Wallet =require('../../models/Wallet')
 const Stripe =require('stripe')
+const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
 require('dotenv').config()
 
 const stripe = Stripe(process.env.STRIPE_KEY)
+cloudinary.config({
+  cloud_name:process.env.CLOUD_NAME,
+  api_key : process.env.CLOUD_KEY,
+  api_secret:process.env.CLOUD_KEY_SECRET
+})
 
 const profile = async (req, res) => {
   try {

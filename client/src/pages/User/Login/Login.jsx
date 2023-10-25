@@ -70,14 +70,14 @@ const Login = () => {
   }
 
   return (
-    <div className="flex flex-wrap h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-2 h-screen">
       {/* Left half: Image */}
       <div
-        className="w-1/2 bg-cover flex bg-blend-darken"
+        className=" bg-cover flex bg-blend-darken"
         style={{ backgroundImage: `url(${LoginImage})` }}></div>
 
       {/* Right half: Login Form */}
-      <div className="w-1/2 bg-blue-950 flex justify-center items-center">
+      <div className=" bg-blue-950 flex justify-center items-center">
         <div className="w-3/4">
           <div className="text-center mb-4">
             <img src={icon} alt="Icon" className="w-1/3 mx-auto" />
