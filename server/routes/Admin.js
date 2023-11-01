@@ -15,5 +15,5 @@ router.put('/accept/:id', adminController.handleAccept);
 router.delete('/reject/:id', adminVerifyToken, adminController.handleReject);
 router.get('/getUserVerification',adminVerifyToken,adminController.getUserVerification)
 router.get('/getTotRides',adminController.getTotRides)
-
+router.post('/addplace',adminController.addplace)
 module.exports = router;

@@ -1,16 +1,22 @@
 const Driver = require('../../models/Driver')
 const Connection = require('../../models/Connection')
 const Chat = require('../../models/Chat')
-const getrides  = async (req, res) => {
-    try {
-        // console.log('hellooo rides')
-        const rides = await Driver.find({Verified: true}).populate("user");
-        // console.log(rides);
-        return res.status(200).json(rides)
-    } catch (error) {
-        console.log(error);
-    }
-}
+const getrides = async (req, res) => {
+  try {
+    const rides = await Driver.find({
+      Verified: true,
+      NumberOfSeats: { $gt: 0 }, // Only find drivers with NumberOfSeats greater than 0
+    }).populate("user");
+
+    console.log(rides, "ride");
+
+    return res.status(200).json(rides);
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 
 const getsinglerides =async (req,res)=>{
     // console.log("dcvbhdv");

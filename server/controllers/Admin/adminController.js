@@ -2,6 +2,7 @@ const adminController = require("express").Router()
 const User = require("../../models/User")
 const Driver =require("../../models/Driver")
 const Connection=require('../../models/Connection')
+const Place = require('../../models/Place')
 
 const getAllUser = async(req, res)=>{
       try {
@@ -37,22 +38,44 @@ const getAllUser = async(req, res)=>{
       }
 
 
-      const handleAccept =async(req,res)=>{
-        console.log("hello rashi");
-        const driver = await Driver.findById(req.params.id);
-        console.log(driver,"accccceeeeppppttttt");
-        driver.Verified = true;
+      const handleAccept = async (req, res) => {
+        try {
+          console.log("hello rashi");
+          const driver = await Driver.findById(req.params.id);
+      
+          if (!driver) {
+            return res.status(404).json({ message: "Driver not found" });
+          }
+      
+          driver.Verified = true;
           await driver.save(); // Save the updated driver document
-          console.log(driver,"acccct");
-      }
+          console.log(driver, "acccct");
+      
+          return res.status(200).json({ message: "Driver verified successfully" });
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+      };
+      
 
-      const handleReject =async(req,res)=>{
-        // const driver = await Driver.findById(req.params.id);
-        
-        const driver = await Driver.deleteOne({_id:req.params.id})
-        console.log(driver,"delted");
-
-      }
+      const handleReject = async (req, res) => {
+        try {
+          const driver = await Driver.deleteOne({ _id: req.params.id });
+      
+          if (driver.deletedCount === 0) {
+            return res.status(404).json({ message: "Driver not found" });
+          }
+      
+          console.log(driver, "deleted");
+      
+          return res.status(200).json({ message: "Driver deleted successfully" });
+        } catch (error) {
+          console.error(error);
+          return res.status(500).json({ error: "Internal Server Error" });
+        }
+      };
+      
 
 
 
@@ -105,9 +128,25 @@ const getAllUser = async(req, res)=>{
     console.log(confirmedConnectionsByMonth);
     console.log('====================================');
     return res.status(200).json(confirmedConnectionsByMonth)
-        //res.json(confirmedConnectionsByMonth);
-       // return confirmedConnectionsByMonth;
-      
       }
+      
+      const addplace = async (req, res) => {
+        try {
+          const { place } = req.body; // Extract the 'place' field from the request body
+      
+          // Create a new Place document
+          const newPlace = new Place({
+            place: place, // 'place' is a string, no need to wrap it in an array
+          });
+      
+          // Save the new place document to the database
+          await newPlace.save();
+      
+          res.status(200).json({ message: 'Place added successfully' });
+        } catch (error) {
+          console.error(error);
+          res.status(500).json({ error: 'Internal Server Error' });
+        }
+      };
 
-module.exports = {getAllUser,handleBlock,getUserVerification,handleAccept,handleReject,getTotRides}
+module.exports = {getAllUser,handleBlock,getUserVerification,handleAccept,handleReject,getTotRides,addplace}

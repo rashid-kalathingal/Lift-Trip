@@ -2,6 +2,7 @@ const User = require('../../models/User')
 const Reviews = require('../../models/Review');
 const Connection = require('../../models/Connection');
 const Wallet =require('../../models/Wallet')
+const Place =require('../../models/Place')
 const Stripe =require('stripe')
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
@@ -225,8 +226,14 @@ return res.status(200).json({ message: 'Review submitted successfully' });
         return res.status(404).json({ message: 'Connection not found' });
       }
   
-      // Optionally, you can update other fields as needed, e.g., PaymentInfo
-  
+      // Retrieve the ride info from the connection
+      const connection = await Connection.findById(ConnectionId);
+      const rideId = connection.rideInfo.toString();
+      const updatedDriver = await Driver.updateOne(
+        { _id: rideId },
+        { $inc: { NumberOfSeats: -1 } } // Use $inc to decrement the NumberOfSeats
+      );
+      
       return res.status(200).json({ message: 'Ride confirmed successfully' });
     } catch (error) {
       console.log(error);
@@ -307,7 +314,7 @@ return res.status(200).json({ message: 'Review submitted successfully' });
   
   const getWallet = async (req, res) => {
     const userId = req.params.id;
-  console.log(userId,"hhhhhhhhhhhhhhh");
+  
     try {
       // Find the Wallet document with the specified userId and populate UserId and SenderId
       const wallet = await Wallet.findOne({ UserId: userId })
@@ -327,8 +334,19 @@ return res.status(200).json({ message: 'Review submitted successfully' });
     }
   };
   
+  const getplaces = async (req, res) => {
+    try {
+      // Use the find method to retrieve all places from the collection
+      const places = await Place.find();
+      const placeNames = places.map(place => place.place);
+      res.status(200).json(placeNames);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    }
+  };
  
   
 
-  module.exports = { profile , changeName,getProfile,changeNumber,changeEmail,changeWallpapper,submitReview,getreviews,comformRide,checkout,getWallet};
+  module.exports = { profile , changeName,getProfile,changeNumber,changeEmail,changeWallpapper,submitReview,getreviews,comformRide,checkout,getWallet,getplaces};
   
