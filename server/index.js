@@ -10,8 +10,8 @@ const path = require("path")
 const app = express()
 const {Server} =require('socket.io')
 
-// Connect to MongoDB
-connectDB();
+
+
 
 // Use CORS and body parsers
 app.use(cors());

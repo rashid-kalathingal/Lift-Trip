@@ -109,7 +109,6 @@ return res.status(200).json(extractedVehicles)
 
 
 const ride = async (req, res) => {
-  // console.log('👍👍👍👍');
   try {
     const {
       user,
@@ -128,9 +127,6 @@ const ride = async (req, res) => {
     } = req.body;
   
     const Availablevehicle = await Driver.find({VehicleNumber:vehicleNumber})
-    // console.log('====================================');
-    // console.log(Availablevehicle);
-    // console.log('====================================');
     let isVerified = false;
  if(Availablevehicle.length>0){
   isVerified=true;
@@ -165,20 +161,41 @@ const ride = async (req, res) => {
 };
 
 
-const getconnections= async (req,res)=>{
-  
+const getconnections = async (req, res) => {
   try {
     const driId = req.params.id;
-   console.log(driId,"make connection fast");
-    const connections = await Connection.find({ driverId: driId ,isConnected:false }).populate('driverId').populate('riderId');
-    console.log(connections,":::::::Ssss");
-    const arrayOfArrays = connections.map(connection => [connection]);
-     //console.log(arrayOfArrays,";;;");
-    return res.status(200).json(arrayOfArrays)
+    const connections = await Connection.find({ driverId: driId, isConnected: false })
+      .populate('driverId')
+      .populate('riderId');
+
+    // Create a Set to store unique objects based on riderId._id
+    const uniqueConnections = new Set();
+
+    // Filter and keep unique connections based on riderId._id
+    const uniqueArrayOfArrays = connections.filter((connection) => {
+      const riderId = connection.riderId._id.toString();
+      if (!uniqueConnections.has(riderId)) {
+        uniqueConnections.add(riderId);
+        return true;
+      }
+      return false;
+    });
+
+    // Find targetRideInfoId from the first object (assumes the array is not empty)
+    const targetRideInfoId = uniqueArrayOfArrays[0].rideInfo._id.toString();
+
+    // Now, filter based on rideInfo
+    const filteredArrayOfArrays = uniqueArrayOfArrays.filter((connection) => {
+      return connection.rideInfo._id.toString() === targetRideInfoId;
+    });
+
+    console.log(filteredArrayOfArrays);
+    return res.status(200).json(filteredArrayOfArrays);
   } catch (error) {
+    console.error(error);
     res.status(500).json({ message: 'Internal server error' });
   }
-}
+};
 
 const acceptconnection =async(req,res)=>{
 try {

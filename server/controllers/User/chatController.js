@@ -19,23 +19,26 @@ const getActiveConnections = async (req, res) => {
       .populate('riderId')
       .populate('rideInfo');
 
-    const userDetailsArray = [];
-
-    activeConnections.forEach((connection) => {
-      if (connection.driverId._id.toString() !== Id.toString()) {
-        userDetailsArray.push({
-          connectionId: connection._id,
-          userDetails: connection.driverId,
-          rideInfo: connection.rideInfo,
-        });
-      } else if (connection.riderId._id.toString() !== Id.toString()) {
-        userDetailsArray.push({
-          connectionId: connection._id,
-          userDetails: connection.riderId,
-          rideInfo: connection.rideInfo,
-        });
-      }
-    });
+      const userDetailsArray = [];
+      const userDetailsSet = new Set(); // Create a Set to store unique user IDs
+      
+      activeConnections.forEach((connection) => {
+        const userId = connection.driverId._id.toString() !== Id.toString()
+          ? connection.driverId._id.toString()
+          : connection.riderId._id.toString();
+      
+        if (!userDetailsSet.has(userId)) {
+          userDetailsSet.add(userId);
+      
+          userDetailsArray.push({
+            connectionId: connection._id,
+            userDetails: connection.driverId._id.toString() !== Id.toString()
+              ? connection.driverId
+              : connection.riderId,
+            rideInfo: connection.rideInfo,
+          });
+        }
+      });
 
     // console.log(userDetailsArray, 'll');
 
