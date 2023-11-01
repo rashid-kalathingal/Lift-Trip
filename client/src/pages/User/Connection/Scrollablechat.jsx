@@ -31,14 +31,22 @@ const Scrollablechat = ({ messages }) => {
                   </div>
                 </div>
               )}
-              <span
-                className={`${
-                  m.sender._id === user._id ? 'bg-blue-200' : 'bg-green-200'
-                } ml-${isSameSenderMargin(messages, m, i, user._id)} mt-${
-                  isSameUser(messages, m, i, user._id) ? 3 : 10
-                } rounded-lg py-1 px-3 max-w-3/4`}>
-                {m.content}
-              </span>
+          <span
+                    className={`${
+                      m.sender._id === user._id ? 'bg-blue-200' : 'bg-green-200'
+                    } ml-${isSameSenderMargin(messages, m, i, user._id)} mt-${
+                      isSameUser(messages, m, i, user._id) ? 3 : 10
+                    } rounded-lg py-1 px-3 max-w-3/4 `}
+                  >
+                    {m.content}
+                    <span className=" pl-3 text-[10px] text-gray-500 ">
+                    {new Date(m.createdAt).toLocaleString([], {
+                      hour: 'numeric',
+                      minute: '2-digit',
+                      hour12: true,
+                    })}
+                  </span>
+                  </span>
             </div>
           ))}
       </ScrollableFeed>

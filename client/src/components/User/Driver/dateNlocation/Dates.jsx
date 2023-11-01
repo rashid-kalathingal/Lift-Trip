@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select from 'react-dropdown-select';
 import Swal from 'sweetalert2';
+import { userInstance, setAccessToken } from '../../../../utils/axiosApi';
+import { useSelector } from 'react-redux';
 const Dates = ({ onDateSelection }) => {
   const [selectedPickUpOption, setSelectedPickUpOption] = useState([]);
   const [selectedDropOffOption, setSelectedDropOffOption] = useState([]);
+  const [places, setPlaces] = useState([]);
   const [selectedDate, setSelectedDate] = useState('');
+  const { user, token } = useSelector((state) => state.auth);
 
   // Calculate the minimum date (today)
   const currentDate = new Date();
@@ -12,8 +16,26 @@ const Dates = ({ onDateSelection }) => {
   const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Month is zero-based
   const day = String(currentDate.getDate()).padStart(2, '0');
   const today = `${year}-${month}-${day}`;
-  console.log(today, 'ttoo');
-  console.log(selectedDate, '///');
+
+  useEffect(() => {
+    const fetchRides = async () => {
+      try {
+        setAccessToken(token);
+        const responses = await userInstance.get('/getplaces');
+        setPlaces(responses.data)
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchRides();
+  }, [token, user._id]); // Add token as a dependency to re-fetch when it changes
+  
+  const placeOptions = places.map(place => ({
+    value: place,
+    label: place
+  }));
+
 
   const handleDateChange = (e) => {
     const myDate = e.target.value;
@@ -27,42 +49,6 @@ const Dates = ({ onDateSelection }) => {
       setSelectedDate(e.target.value);
     }
   };
-
-  const pickUpOptions = [
-    { label: 'Thiruvananthapuram', value: 'thiruvananthapuram' },
-    { label: 'Kochi', value: 'kochi' },
-    { label: 'Kozhikode', value: 'kozhikode' },
-    { label: 'Kollam', value: 'kollam' },
-    { label: 'Thrissur', value: 'thrissur' },
-    { label: 'Alappuzha', value: 'alappuzha' },
-    { label: 'Palakkad', value: 'palakkad' },
-    { label: 'Kannur', value: 'kannur' },
-    { label: 'Kottayam', value: 'kottayam' },
-    { label: 'Pathanamthitta', value: 'pathanamthitta' },
-    { label: 'Idukki', value: 'idukki' },
-    { label: 'Malappuram', value: 'malappuram' },
-    { label: 'Wayanad', value: 'wayanad' },
-    { label: 'Ernakulam', value: 'ernakulam' },
-    { label: 'Kasaragod', value: 'kasaragod' },
-  ];
-
-  const dropOffOptions = [
-    { label: 'Thiruvananthapuram', value: 'thiruvananthapuram' },
-    { label: 'Kochi', value: 'kochi' },
-    { label: 'Kozhikode', value: 'kozhikode' },
-    { label: 'Kollam', value: 'kollam' },
-    { label: 'Thrissur', value: 'thrissur' },
-    { label: 'Alappuzha', value: 'alappuzha' },
-    { label: 'Palakkad', value: 'palakkad' },
-    { label: 'Kannur', value: 'kannur' },
-    { label: 'Kottayam', value: 'kottayam' },
-    { label: 'Pathanamthitta', value: 'pathanamthitta' },
-    { label: 'Idukki', value: 'idukki' },
-    { label: 'Malappuram', value: 'malappuram' },
-    { label: 'Wayanad', value: 'wayanad' },
-    { label: 'Ernakulam', value: 'ernakulam' },
-    { label: 'Kasaragod', value: 'kasaragod' },
-  ];
   const handleSelection = () => {
     const selectedData = {
       pickUpOption: selectedPickUpOption,
@@ -92,7 +78,7 @@ const Dates = ({ onDateSelection }) => {
       <div className="relative inline-flex items-center">
         {/* First Dropdown */}
         <Select
-          options={pickUpOptions}
+          options={placeOptions}
           values={selectedPickUpOption}
           onChange={(values) => setSelectedPickUpOption(values)}
           placeholder="Enter Pick-Up Location"
@@ -104,7 +90,7 @@ const Dates = ({ onDateSelection }) => {
       <div className="relative inline-flex items-center">
         {/* Second Dropdown */}
         <Select
-          options={dropOffOptions}
+          options={placeOptions}
           values={selectedDropOffOption}
           onChange={(values) => setSelectedDropOffOption(values)}
           placeholder="Enter Drop-Off Location"

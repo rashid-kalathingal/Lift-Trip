@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux'; // Import useSelector from 'react-redux'
 import Navbar from '../../../components/User/navbar/Navbar';
-import Slogon from '../../../components/User/slogon/Slogon';
+// import Slogon from '../../../components/User/slogon/Slogon';
 import Footer from '../../../components/User/footer/footer';
 import DotLoader from 'react-spinners/DotLoader';
 import Select from 'react-dropdown-select';
@@ -14,12 +14,12 @@ const Rider = () => {
   const [pageNumber, setPageNumber] = useState(0);
   const ridesPerPage = 4; // Number of rides to show per page
   const [selectedPickUpOption, setSelectedPickUpOption] = useState([]);
+  const [places, setPlaces] = useState([]);
   const [selectedDropOffOption, setSelectedDropOffOption] = useState([]);
   const [sortByDate, setSortByDate] = useState(false);
   const [selectedPaymentOptions, setSelectedPaymentOptions] = useState([]);
 
   const { user, token } = useSelector((state) => state.auth);
-  // console.log(user,"👌👌👌👌👌");
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
@@ -34,8 +34,8 @@ const Rider = () => {
         // };
         setAccessToken(token);
         const response = await userInstance.get('/getrides');
-
-        console.log(response.data, '🔥🔥🔥');
+        const responses = await userInstance.get('/getplaces');
+        setPlaces(responses.data)
         // Filter out past rides based on the date format 'YYYY-MM-DD'
         const currentDate = new Date();
         const filteredRides = response.data.filter((ride) => {
@@ -43,7 +43,7 @@ const Rider = () => {
           return rideDate >= currentDate && ride.user._id !== user._id;
         });
 
-        // console.log(filteredRides,'llhllh');
+       
         setRides(filteredRides);
       } catch (error) {
         console.error(error);
@@ -52,25 +52,14 @@ const Rider = () => {
 
     fetchRides();
   }, [token, user._id]); // Add token as a dependency to re-fetch when it changes
-  console.log(rides);
+  
 
-  const Options = [
-    { label: 'Thiruvananthapuram', value: 'thiruvananthapuram' },
-    { label: 'Kochi', value: 'kochi' },
-    { label: 'Kozhikode', value: 'kozhikode' },
-    { label: 'Kollam', value: 'kollam' },
-    { label: 'Thrissur', value: 'thrissur' },
-    { label: 'Alappuzha', value: 'alappuzha' },
-    { label: 'Palakkad', value: 'palakkad' },
-    { label: 'Kannur', value: 'kannur' },
-    { label: 'Kottayam', value: 'kottayam' },
-    { label: 'Pathanamthitta', value: 'pathanamthitta' },
-    { label: 'Idukki', value: 'idukki' },
-    { label: 'Malappuram', value: 'malappuram' },
-    { label: 'Wayanad', value: 'wayanad' },
-    { label: 'Ernakulam', value: 'ernakulam' },
-    { label: 'Kasaragod', value: 'kasaragod' },
-  ];
+  const placeOptions = places.map(place => ({
+    value: place,
+    label: place
+  }));
+
+  
 
   const handlePaymentOptionToggle = (paymentOption) => {
     if (selectedPaymentOptions.includes(paymentOption)) {
@@ -122,13 +111,12 @@ const Rider = () => {
   return (
     <div>
       <Navbar />
-      <Slogon />
-
-      <div className="py-4 bg-sky-100  flex flex-wrap items-center justify-center gap-5">
+      {/* <Slogon /> */}
+      <div className="py-4 bg-sky-100  flex flex-wrap items-center justify-center gap-5 mt-3">
         <div className="relative w-[200px] mb-1.5  inline-flex items-center">
           {/* First Dropdown */}
           <Select
-            options={Options}
+            options={placeOptions}
             values={selectedPickUpOption}
             onChange={(values) => setSelectedPickUpOption(values)}
             placeholder="Enter Pick-Up Location"
@@ -140,7 +128,7 @@ const Rider = () => {
         <div className="relative w-[200px] mb-1.5  inline-flex items-center">
           {/* Second Dropdown */}
           <Select
-            options={Options}
+            options={placeOptions}
             values={selectedDropOffOption}
             onChange={(values) => setSelectedDropOffOption(values)}
             placeholder="Enter Drop-Off Location"
@@ -208,7 +196,7 @@ const Rider = () => {
             {displayedRides.map((ride, index) => (
               <article
                 key={index}
-                className="mx-auto pb-5 max-w-sm transform duration-500 hover:-translate-y-1 cursor-pointer group">
+                className="mx-auto pb-5 max-w-sm transform duration-500 hover:-translate-y-1 cursor-pointer group pl-6">
                 <div className="max-h-125 overflow-hidden">
                   <img
                     className="transform duration-300 group-hover:scale-110"
@@ -220,9 +208,7 @@ const Rider = () => {
                   <div className="text-orange-500 text-base font-semibold">
                     Driver Name: {ride.user.username}
                   </div>
-                  {/* <div className="text-base text-right">
-                <span className="font-bold">{ride.Price}</span>/Day
-              </div> */}
+                  
                 </div>
                 <h2 className="font-bold text-2xl">
                   {ride.pickUp} To {ride.dropOff}

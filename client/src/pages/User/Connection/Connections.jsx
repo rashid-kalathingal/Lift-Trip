@@ -23,6 +23,7 @@ const Connections = () => {
   const initialDropdownStates = Array(connections.length).fill(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(initialDropdownStates);
   const dropdownRef = useRef(null);
+  const listRef = useRef(null)
   const [selectedUserId, setSelectedUserId] = useState(null);
   const { selectedChat, setSelectedChat, chats, setChats } = ChatState();
   const [rating, setRating] = useState(0);
@@ -63,6 +64,23 @@ const Connections = () => {
   };
 
   const clickHandler = async (data) => {
+    // Get an array of child elements
+const childs = Array.from(listRef.current.children);
+
+// Remove all child elements from the parent
+childs.forEach(child => {
+  listRef.current.removeChild(child);
+});
+
+// Now, you can append the parent or any other element
+listRef.current.appendChild(parent);
+
+// Reappend the child elements
+childs.forEach(child => {
+  if(child !== parent){
+    listRef.current.appendChild(child);
+  }
+});
     setSelectedUser(data.username);
     // const options = {
     //     headers: {
@@ -291,7 +309,7 @@ const Connections = () => {
       <div className="grid md:grid-cols-6" style={{ minHeight: '660px' }}>
         <div className="col-span-2 relative ">
           {connections.length > 0 ? (
-            <ul className="pt-3 pl-2   ">
+            <ul className="pt-3 pl-2"ref={listRef}>
               {connections.map((item, index) => (
                 <li
                   key={item._id}
@@ -325,11 +343,11 @@ const Connections = () => {
                       </p>
                     </div>
                   </div>
-                  <div className="flex space-x-4">
+                  <div className="flex space-x-4"  onClick={(e) => {
+                        clickHandler(e.currentTarget.parentElement,item.userDetails);
+                      }}>
                     <HiChatBubbleLeftRight
-                      onClick={() => {
-                        clickHandler(item.userDetails);
-                      }}
+  
                     />
 
                     <div className="relative">
