@@ -3,9 +3,16 @@ const Reviews = require('../../models/Review');
 const Connection = require('../../models/Connection');
 const Wallet =require('../../models/Wallet')
 const Stripe =require('stripe')
+const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
 require('dotenv').config()
 
 const stripe = Stripe(process.env.STRIPE_KEY)
+cloudinary.config({
+  cloud_name:process.env.CLOUD_NAME,
+  api_key : process.env.CLOUD_KEY,
+  api_secret:process.env.CLOUD_KEY_SECRET
+})
 
 const profile = async (req, res) => {
   try {
@@ -18,23 +25,27 @@ const profile = async (req, res) => {
 
     // Get the filename of the new image
     const newFilePath = file.filename;
-
+      // Upload selectedImage to Cloudinary
+      const imageUploadResult = await cloudinary.uploader.upload(file.path, {
+        folder: 'User', // Specify the folder name
+      });
+      const imageUrl = imageUploadResult.secure_url;
     // Find the user by ID
     const user = await User.findById(userId);
 
     // Check if the user already has a displayPic
     if (user.displayPic && user.displayPic.length > 0) {
       // Replace the first item in the displayPic array with the new filename
-      user.displayPic[0] = newFilePath;
+      user.displayPic[0] = imageUrl;
     } else {
       // If there's no existing displayPic, create a new array with the new filename
-      user.displayPic = [newFilePath];
+      user.displayPic = [imageUrl];
     }
 
     // Save the updated user document
     await user.save();
 
-    return res.status(200).json({data:newFilePath ,message: 'Display picture updated successfully' });
+    return res.status(200).json({data:imageUrl ,message: 'Display picture updated successfully' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Internal server error' });

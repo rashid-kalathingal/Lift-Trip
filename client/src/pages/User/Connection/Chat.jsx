@@ -6,7 +6,7 @@ import { userInstance, setAccessToken } from '../../../utils/axiosApi';
 import { useSelector } from 'react-redux';
 import Scrollablechat from './Scrollablechat';
 import io from 'socket.io-client';
-const ENDPOINT = 'http://localhost:5000';
+const ENDPOINT = 'https://lifttrip.ziasrote.live';
 var socket, selectedChatCompare;
 
 const Chat = ({ selectedUser, selectedChatId }) => {

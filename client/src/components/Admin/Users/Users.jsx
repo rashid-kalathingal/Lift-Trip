@@ -3,6 +3,7 @@ import { request } from '../../../utils/fetchApi';
 import { useSelector } from 'react-redux';
 import { FiUser, FiX } from 'react-icons/fi';
 import Swal from 'sweetalert2';
+import { adminInstance } from '../../../utils/axiosApi';
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null); // To track the selected user
@@ -23,6 +24,50 @@ const Users = () => {
     };
     fetchUsers();
   }, [token]);
+
+  const AddPlace = async () => {
+    try {
+      const { value: place } = await Swal.fire({
+        title: 'Submit your Location',
+        input: 'text',
+        inputAttributes: {
+          autocapitalize: 'off',
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Done',
+        showLoaderOnConfirm: true,
+        preConfirm: async (place) => {
+          try {
+            const options = {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            };
+            // Assuming you want to send the place to the server
+            const data = await adminInstance.post(
+              `/addplace`,
+              { place },
+              options
+            );
+          
+          } catch (error) {
+            console.error(error);
+            throw new Error(error.message); // This will show an error message in the Swal dialog
+          }
+        },
+        allowOutsideClick: () => !Swal.isLoading(),
+      });
+    
+      if (place) {
+        Swal.fire({
+          title: `${place}'s new place`,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   const handleBlockToggle = async (id) => {
     Swal.fire({
@@ -78,6 +123,7 @@ const Users = () => {
 
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <button type="button" className="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onClick={AddPlace }>Add New Place</button>
       <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
           <tr>

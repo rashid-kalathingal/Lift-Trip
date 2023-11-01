@@ -6,6 +6,7 @@ const cors = require('cors')
 const userRoutes = require('./routes/User');
 const adminRoutes = require('./routes/Admin');
 // const stripe =require('./routes/Stripe')
+const path = require("path")
 const app = express()
 const {Server} =require('socket.io')
 
@@ -14,17 +15,16 @@ connectDB();
 
 // Use CORS and body parsers
 app.use(cors());
-app.use(express.json());
+app.use(express.json({limit:'50mb'}));
 app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }));
-
+app.use(express.urlencoded({limit:'50mb', extended: true }));
 
 
 
 // Use user and admin routes
-app.use('/auth', userRoutes); 
-app.use('/adminAuth', adminRoutes);
-// app.use('/auth/stripe', stripe);
+app.use('/api/auth', userRoutes); 
+app.use('/api/adminAuth', adminRoutes);
+
 
 // Start the server
 const PORT = process.env.PORT || 5000;
@@ -36,7 +36,7 @@ const server =app.listen(PORT, () => {
 const io = require("socket.io")(server, {
   pingTimeout: 60000,
   cors: {
-    origin: "http://localhost:3000",
+    origin: ["https://lifttrip.ziasrote.live", "http://lifttrip.ziasrote.live", "http://localhost:3000", "*"],
     // credentials: true,
   },
 });

@@ -7,7 +7,7 @@ const Message = require('../../models/Message')
 const getActiveConnections = async (req, res) => {
   try {
     const Id = req.params.id;
-    console.log(Id);
+    // console.log(Id);
     const activeConnections = await Connection.find({
       $or: [
         { driverId: Id },
@@ -37,11 +37,11 @@ const getActiveConnections = async (req, res) => {
       }
     });
 
-    console.log(userDetailsArray, 'll');
+    // console.log(userDetailsArray, 'll');
 
     return res.status(200).json(userDetailsArray);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
@@ -51,7 +51,7 @@ const getActiveConnections = async (req, res) => {
 
 const getChatId = async (req, res) => {
     const { Id1, Id2 } = req.query;
-    console.log(Id1, Id2,"???////");
+    // console.log(Id1, Id2,"???////");
     try {
         // Assuming you have a Chat model defined and can access your MongoDB collection
         const chat = await Chat.findOne({
@@ -86,15 +86,15 @@ try {
         path: "latestMessage.sender",
         select: "username displayPic email",
       });
-      console.log(results);
+      // console.log(results);
       res.status(200).json(results);
     });
     
     // const chats =await Chat.find({})
-    // console.log(chats);
+    console.log(chats);
     // return res.status(200).json(chats)
 } catch (error) {
-    console.log(error);
+    // console.log(error);
 }
   }
   
@@ -104,7 +104,7 @@ try {
       const { content, chatId, senderId } = req.body;
   
       if (!content || !chatId || !senderId) {
-          console.log("Invalid data passed into request");
+          // console.log("Invalid data passed into request");
           return res.sendStatus(400);
       }
   
@@ -142,7 +142,7 @@ try {
   };
   
   const getmessage=async (req,res)=>{
-    // console.log( req.params.id,"😍");
+    console.log( req.params.id,"😍");
     try {
         const messages = await Message.find({ chat: req.params.id })
           .populate("sender", "username displayPic email")
@@ -155,7 +155,7 @@ try {
   }
   const blockUserbyUser = async (req, res) => {
     const { Id1, Id2 } = req.query;
-    console.log(Id1, Id2, "???////");
+    // console.log(Id1, Id2, "???////");
   
     try {
       const filter = {
@@ -175,11 +175,11 @@ try {
   
       if (updatedConnection) {
         // The document was found and updated successfully
-        console.log('Document updated:', updatedConnection);
+        // console.log('Document updated:', updatedConnection);
         res.status(200).json({ message: 'User blocked successfully', data: updatedConnection });
       } else {
         // No document matching the filter was found
-        console.log('Document not found or not updated.');
+        // console.log('Document not found or not updated.');
         res.status(404).json({ message: 'User not found' });
       }
     } catch (error) {

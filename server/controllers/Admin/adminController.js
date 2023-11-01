@@ -9,7 +9,6 @@ const getAllUser = async(req, res)=>{
         // console.log(users,"hhhhhhhhhh");
           return res.status(500).json(users)
       } catch (error) {
-      
           return res.status(500).json(error)
       }
   }
@@ -17,7 +16,6 @@ const getAllUser = async(req, res)=>{
 
   const handleBlock = async (req, res) => {
         try {
-         // console.log("heloooooooooo@@@@@@@@@@@@@@");
           const user = await User.findById(req.params.id);
           user.isBlocked = !user.isBlocked; // Toggle the isBlocked status
           await user.save(); // Save the updated user
@@ -29,9 +27,8 @@ const getAllUser = async(req, res)=>{
 
 
 
-      const getUserVerification= async(req,res)=>{
+  const getUserVerification= async(req,res)=>{
    try {
-  
    const driver = await Driver.find({Verified:false}).populate("user")
    return res.status(200).json(driver)
    } catch (error) {

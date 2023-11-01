@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
 
 const register = async (req, res) => {
     try {
-        console.log(req.body,"////////mmmmmmmmm");
+        // console.log(req.body,"////////mmmmmmmmm");
         const isExisting = await User.findOne({
             $or: [
                 { email: req.body.email },
@@ -40,7 +40,7 @@ const register = async (req, res) => {
 };
 
 const googleAuth = async (req, res) => {
-  console.log(req.body, "/////////////////////////");
+  
   const Email = req.body.email;
   const Username = req.body.name;
   const DP = req.body.picture;
@@ -108,15 +108,15 @@ const login = async(req,res)=>{
 
  const checkUser = async(req,res)=>{
   try {
-    console.log("./..");
+    // console.log("./..");
     const userId = req.params.id;
     const usersz = await User.find({ _id: userId })
-   // console.log(usersz);
+   console.log(usersz);
     const userB =usersz[0].isBlocked
-    console.log(userB,"////>>");
+    // console.log(userB,"////>>");
     return res.status(200).json(userB)
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
  }   
 

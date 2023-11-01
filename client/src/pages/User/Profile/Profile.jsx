@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FiEdit } from 'react-icons/fi';
 import Swal from 'sweetalert2';
 import { userInstance } from '../../../utils/axiosApi';
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import logoo from '../../../assets/ss.jpg';
 import {
   changeuserName,
@@ -347,7 +347,7 @@ const Profile = () => {
                   backgroundImage: `url(${
                     display?.startsWith('http')
                       ? display
-                      : `http://localhost:5000/images/${display}`
+                      : {display}
                   })`,
                 }}></div>
               <h1 className="text-3xl font-bold pt-8 lg:pt-0">{name}</h1>
@@ -377,7 +377,7 @@ const Profile = () => {
                 Totally optional short description about yourself, what you do,
                 and so on.
               </p>
-              <div className="pt-12 pb-8 flex">
+              <div className="pt-12 pb-8 flex flex-wrap">
                 <button
                   className="bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded-full"
                   onClick={handleMyVehiclesClick}>
@@ -409,7 +409,7 @@ const Profile = () => {
                 src={
                   display.startsWith('http')
                     ? display
-                    : `http://localhost:5000/images/${display}`
+                    : {display}
                 }
                 alt="Profile"
                 className="rounded-none lg:rounded-lg shadow-2xl hidden lg:block"

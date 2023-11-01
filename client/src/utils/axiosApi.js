@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { BASE_URL } from './constant';
 
 
 let accessToken;
@@ -9,13 +10,13 @@ export function setAccessToken(token){
 
 
 const userInstance = axios.create({
-    baseURL : "http://localhost:5000/auth",
+    baseURL : `${BASE_URL}/auth`,
     headers:{
         Accept:"application/json"
     }
 })
 const adminInstance = axios.create({
-    baseURL : "http://localhost:5000/adminAuth",
+    baseURL :`${BASE_URL}/adminAuth` ,
     headers:{
         Accept:"application/json"
     }

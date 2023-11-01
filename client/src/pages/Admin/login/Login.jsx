@@ -36,13 +36,13 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="flex h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-2 h-screen">
       <div
-        className="w-1/2 bg-cover"
+        className=" bg-cover"
         style={{ backgroundImage: `url(${image})` }}>
         {/* Background Image */}
       </div>
-      <div className="w-1/2 flex justify-center items-center bg-amber-950">
+      <div className=" flex justify-center items-center bg-amber-950">
         <div className="w-full max-w-xs">
           <div className="text-center mb-4">
             <img src={icon} alt="Icon" className="w-1/3 mx-auto" />

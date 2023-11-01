@@ -99,14 +99,14 @@ const DetailView = () => {
     <>
       <Navbar />
 
-      <div className="grid md:grid-cols-6 gap-3">
+      <div className="grid md:grid-cols-6 gap-3 bg-stone-800">
         <div className="md:col-span-4 pt-4 pl-4 pb-4">
-          <div className="flex flex-wrap w-full gap-4 justify-center bg-stone-100 py-4  ">
+          <div className="flex flex-wrap w-full gap-4 justify-center  bg-cyan-950/70 py-4 shadow-2xl  ">
             <div className="w-full md:w-5/12">
               {ride.VehicleImage && ride.VehicleImage[0] ? (
                 <img
                   className="rounded-t-lg  px-2 aspect-video w-full"
-                  src={`http://localhost:5000/images/${ride.VehicleImage[0]}`}
+                  src={ride.VehicleImage[0]}
                   alt=""
                 />
               ) : (
@@ -115,24 +115,24 @@ const DetailView = () => {
             </div>
             <div className="w-full px-2  md:w-1/2">
               <div className="leading-8 text-ellipsis">
-                <h5>Vehicle Model : {ride.VehicleModel}</h5>
-                <h5>Vehicle Number : {ride.VehicleNumber}</h5>
-                <h5>Number of Seats : {ride.NumberOfSeats}</h5>
-                <h5>Available Space : {ride.AvailableSpace}</h5>
-                <h5>Documents : Verified</h5>
-                <h5>Date: {ride.date}</h5>
-                <h5>Payment Way : {ride.Payment}</h5>
-                <h5>Instructions : {ride.Instruction}</h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Vehicle Model: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.VehicleModel}</span></h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Vehicle Number: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}> {ride.VehicleNumber}</span></h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Number of Seats: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}> {ride.NumberOfSeats}</span></h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Available Space: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.AvailableSpace}</span></h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Documents: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}> Verified</span></h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Date: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.date}</span></h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Payment Way: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.Payment}</span></h5>
+              <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Instructions: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.Instruction}</span></h5>
               </div>
             </div>
           </div>
 
-          <div className=" flex flex-wrap w-full gap-4 justify-center bg-orange-50 py-4  mt-4">
+          <div className=" flex flex-wrap w-full gap-4 justify-center bg-cyan-950/70 py-4 shadow-2xl  mt-4">
             <div className="w-full md:w-5/12">
               {ride.VehicleImage && ride.VehicleImage[0] ? (
                 <img
                   className="rounded-t-lg  px-2 aspect-video w-full"
-                  src={`http://localhost:5000/images/${ride.user.displayPic[0]}`}
+                  src={ride.user.displayPic[0]}
                   alt=""
                 />
               ) : (
@@ -143,14 +143,14 @@ const DetailView = () => {
               <div className="leading-8 text-ellipsis">
                 {ride.user ? (
                   <>
-                    <h5>Driver Name: {ride.user.username}</h5>
-                    <h5>Driver Number : {ride.user.mobile}</h5>
-                    <h5>Driver Email : {ride.user.email}</h5>
+                    <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Driver Name: </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.user.username}</span></h5>
+                    <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Driver Number : </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.user.mobile}</span></h5>
+                    <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Driver Email : </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>{ride.user.email}</span></h5>
                   </>
                 ) : (
                   <p>Driver information not available</p>
                 )}
-                <h5>Documents : Verified</h5>
+                <h5><span style={{ color: 'purple', fontFamily: 'Courier New' }}>Documents : </span><span style={{ color: 'white', fontFamily: 'Tahoma' }}>Verified</span></h5>
               </div>
             </div>
           </div>
@@ -164,13 +164,13 @@ const DetailView = () => {
               <div className="relative mx-0 mt-4 flex items-center gap-4 overflow-hidden rounded-xl bg-transparent bg-clip-border pt-0 pb-8 text-gray-700 shadow-none">
                 {data.Driver ? (
                   <img
-                    src={`http://localhost:5000/images/${data.Driver.displayPic[0]}`}
+                    src={data.Driver.displayPic[0]}
                     alt=""
                     className="relative inline-block h-[58px] w-[58px] !rounded-full object-cover object-center"
                   />
                 ) : (
                   <img
-                    src={`http://localhost:5000/images/${data.Rider.displayPic[0]}`}
+                    src={data.Rider.displayPic[0]}
                     alt=""
                     className="relative inline-block h-[58px] w-[58px] !rounded-full object-cover object-center"
                   />

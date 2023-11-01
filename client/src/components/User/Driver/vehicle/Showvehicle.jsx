@@ -193,7 +193,7 @@ const Showvehicle = ({ onVehicleSelect }) => {
                 Vehicle Image
               </label>
               <img
-                src={`http://localhost:5000/images/${vehicleImage}`}
+                src={vehicleImage}
                 alt="Vehicle Image"
                 className="w-52  h-28 mt-2 rounded-lg"
               />
@@ -206,7 +206,7 @@ const Showvehicle = ({ onVehicleSelect }) => {
                 Vehicle RC
               </label>
               <img
-                src={`http://localhost:5000/images/${vehicleRC}`}
+                src={vehicleRC}
                 alt="Vehicle RC"
                 className="w-52  h-28 mt-2 rounded-lg"
               />
@@ -219,7 +219,7 @@ const Showvehicle = ({ onVehicleSelect }) => {
                 Vehicle Insurance
               </label>
               <img
-                src={`http://localhost:5000/images/${vehicleInsurance}`}
+                src={vehicleInsurance}
                 alt="Vehicle Insurance"
                 className="w-52  h-28 mt-2 rounded-lg"
               />

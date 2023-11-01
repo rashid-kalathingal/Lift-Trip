@@ -1,10 +1,19 @@
 const Vehicle = require('../../models/Vehicle');
 const Driver = require('../../models/Driver')
 const Connection =require('../../models/Connection')
+const cloudinary = require('cloudinary').v2;
+const fs = require('fs');
+
+cloudinary.config({
+  cloud_name:process.env.CLOUD_NAME,
+  api_key : process.env.CLOUD_KEY,
+  api_secret:process.env.CLOUD_KEY_SECRET
+})
+
 const vehicle = async (req, res) => {
   try {
     // Destructure vehicle data from req.body
-    console.log(req.body, "bodyyyyy vehicle")
+    // console.log(req.body, "bodyyyyy vehicle")
     let { user, model, Number, seats, space } = req.body;
 
     user = JSON.parse(user)
@@ -13,7 +22,27 @@ const vehicle = async (req, res) => {
     const selectedImage = req.files.selectedImage[0];
     const selectedRC = req.files.selectedRC[0];
     const selectedInsurance = req.files.selectedInsurance[0];
-   
+      // Upload selectedImage to Cloudinary
+      const imageUploadResult = await cloudinary.uploader.upload(selectedImage.path, {
+        folder: 'images', // Specify the folder name
+      });
+  
+      // Upload selectedRC to Cloudinary
+      const rcUploadResult = await cloudinary.uploader.upload(selectedRC.path, {
+        folder: 'images', // Specify the folder name
+      });
+  
+      // Upload selectedInsurance to Cloudinary
+      const insuranceUploadResult = await cloudinary.uploader.upload(selectedInsurance.path, {
+        folder: 'images', // Specify the folder name
+      });
+  
+      // You can now access the Cloudinary URLs for these uploaded files
+      const imageUrl = imageUploadResult.secure_url;
+      const rcUrl = rcUploadResult.secure_url;
+      const insuranceUrl = insuranceUploadResult.secure_url;
+      
+      //  console.log(imageUrl,rcUrl,insuranceUrl);
 
     // Find the existing Vehicle document by user ID
     const existingVehicle = await Vehicle.findOne({ user: user._id });
@@ -25,9 +54,9 @@ const vehicle = async (req, res) => {
         VehicleNumber: Number,
         NumberOfSeats: seats,
         AvailableSpace: space,
-        VehicleImage: selectedImage.filename, // Store the original filename
-        VehicleRC: selectedRC.filename, // Store the original filename
-        VehicleInsurance: selectedInsurance.filename, // Store the original filename
+        VehicleImage: imageUrl, // Store the original filename
+        VehicleRC: rcUrl, // Store the original filename
+        VehicleInsurance: insuranceUrl, // Store the original filename
       });
 
       // Save the updated document
@@ -44,9 +73,9 @@ const vehicle = async (req, res) => {
             VehicleNumber: Number,
             NumberOfSeats: seats,
             AvailableSpace: space,
-            VehicleImage: selectedImage.filename, // Store the original filename
-            VehicleRC: selectedRC.filename, // Store the original filename
-            VehicleInsurance: selectedInsurance.filename, // Store the original filename
+            VehicleImage: imageUrl, // Store the original filename
+            VehicleRC:  rcUrl, // Store the original filename
+            VehicleInsurance: insuranceUrl, // Store the original filename
           }
         ]
       });
@@ -64,10 +93,10 @@ const vehicle = async (req, res) => {
 
 
 const getVehicles =async(req,res)=>{
-  console.log("kk");
+  // console.log("kk");
   try {
     const userId = req.params.id;
-    console.log(userId);
+    // console.log(userId);
     const vehicles = await Vehicle.find({ user: userId });
 const extractedVehicle = vehicles.map(vehicleDoc => vehicleDoc.vehicle);
 const extractedVehicles =extractedVehicle[0]
@@ -80,7 +109,7 @@ return res.status(200).json(extractedVehicles)
 
 
 const ride = async (req, res) => {
-  console.log('👍👍👍👍');
+  // console.log('👍👍👍👍');
   try {
     const {
       user,
@@ -99,9 +128,9 @@ const ride = async (req, res) => {
     } = req.body;
   
     const Availablevehicle = await Driver.find({VehicleNumber:vehicleNumber})
-    console.log('====================================');
-    console.log(Availablevehicle);
-    console.log('====================================');
+    // console.log('====================================');
+    // console.log(Availablevehicle);
+    // console.log('====================================');
     let isVerified = false;
  if(Availablevehicle.length>0){
   isVerified=true;
@@ -140,9 +169,9 @@ const getconnections= async (req,res)=>{
   
   try {
     const driId = req.params.id;
-   // console.log(driId,"make connection fast");
+   console.log(driId,"make connection fast");
     const connections = await Connection.find({ driverId: driId ,isConnected:false }).populate('driverId').populate('riderId');
-    // console.log(connections,":::::::Ssss");
+    console.log(connections,":::::::Ssss");
     const arrayOfArrays = connections.map(connection => [connection]);
      //console.log(arrayOfArrays,";;;");
     return res.status(200).json(arrayOfArrays)
@@ -154,17 +183,17 @@ const getconnections= async (req,res)=>{
 const acceptconnection =async(req,res)=>{
 try {
   const connection =await Connection.findById(req.params.id)
-  console.log(connection);
+  // console.log(connection);
   connection.isConnected= true;
           await connection.save(); 
 } catch (error) {
-  console.log(error);
+  // console.log(error);
 }
 }
 const rejectionconnection = async (req, res) => {
   try {
     const connection = await Connection.findById(req.params.id);
-    console.log(connection);
+    // console.log(connection);
 
     if (!connection) {
       return res.status(404).json({ error: 'Connection not found' });
@@ -175,7 +204,7 @@ const rejectionconnection = async (req, res) => {
 
     res.status(204).send();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };

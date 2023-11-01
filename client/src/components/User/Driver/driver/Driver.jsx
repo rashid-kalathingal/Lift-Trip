@@ -136,7 +136,7 @@ const Driver = ({ header }) => {
           </div>
           {display ? (
             <img
-              src={`http://localhost:5000/images/${display}`}
+              src={display}
               alt="Profile"
               className="w-60 h-52"
             />

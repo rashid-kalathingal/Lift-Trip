@@ -128,7 +128,7 @@ const DropdownNotification = ({ data, onClick }) => {
                     <div className="flex-shrink-0">
                       <img
                         className="w-8 h-8 rounded-full"
-                        src={`http://localhost:5000/images/${item.riderId.displayPic[0]}`}
+                        src={item.riderId.displayPic[0]}
                         alt={`${item.riderId.username}'s Profile Pic`}
                       />
                     </div>
@@ -137,7 +137,7 @@ const DropdownNotification = ({ data, onClick }) => {
                         {item.riderId.username}
                       </p>
                       <p className="text-sm text-gray-500 truncate dark:text-gray-400">
-                        {item.riderId.email}
+                      {new Date(item.updatedAt).toLocaleString([], { hour: 'numeric', minute: '2-digit', hour12: true })}
                       </p>
                     </div>
                     <button
