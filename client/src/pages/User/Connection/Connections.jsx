@@ -63,7 +63,7 @@ const Connections = () => {
     setSelectedUserId(null);
   };
 
-  const clickHandler = async (data) => {
+  const clickHandler = async (parent,data) => {
     // Get an array of child elements
 const childs = Array.from(listRef.current.children);
 
@@ -347,7 +347,6 @@ childs.forEach(child => {
                         clickHandler(e.currentTarget.parentElement,item.userDetails);
                       }}>
                     <HiChatBubbleLeftRight
-  
                     />
 
                     <div className="relative">
